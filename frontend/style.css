@@ -1,0 +1,5 @@
+body { margin:0; font-family: Arial, sans-serif; }
+#map { height: 80vh; }
+#sidebar { padding: 10px; height: 20vh; overflow:auto; background:#f8f8f8; }
+.controls { margin-bottom:8px; }
+.result-item { padding:6px; border-bottom:1px solid #ddd; cursor:pointer;}
