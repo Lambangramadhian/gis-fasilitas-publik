@@ -38,13 +38,16 @@ function showResults(list) {
 }
 
 async function search() {
-    const category = document.getElementById('category').value;
+    const category = document.getElementById('filterCategory').value;
     const q = document.getElementById('q').value;
     const data = await fetchFacilities({ category: category || '', q: q || '' });
     showResults(data);
 }
 
-document.getElementById('searchBtn').addEventListener('click', search);
+document.getElementById('searchBtn').addEventListener('click', () => {
+    console.log("Tombol Cari diklik");
+    search();
+});
 document.getElementById('refreshBtn').addEventListener('click', () => search());
 
 // load all on start
@@ -55,7 +58,7 @@ document.getElementById('addForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const payload = {
     name: document.getElementById('name').value,
-    category: document.getElementById('cat').value,
+    category: document.getElementById('category').value,
     address: document.getElementById('addr').value,
     latitude: parseFloat(document.getElementById('lat').value),
     longitude: parseFloat(document.getElementById('lng').value),
