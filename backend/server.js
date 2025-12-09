@@ -8,6 +8,10 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+// === SERVE FRONTEND STATIC FILES ===
+// Ini akan menyajikan file HTML, CSS, JS dari folder frontend
+app.use(express.static(path.join(__dirname, '../frontend')));
+
 // DB setup: db file in same folder
 const DBSOURCE = path.join(__dirname, 'facilities.db');
 const db = new sqlite3.Database(DBSOURCE, (err) => {
@@ -29,6 +33,8 @@ const db = new sqlite3.Database(DBSOURCE, (err) => {
     )`);
   }
 });
+
+// ============ API ENDPOINTS ============
 
 // GET all (with optional category filter)
 app.get('/api/facilities', (req, res) => {
@@ -93,10 +99,20 @@ app.delete('/api/facilities/:id', (req, res) => {
   });
 });
 
-// Health
-app.get('/', (req, res) => {
-  res.send('GIS Facility API running');
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'OK', message: 'GIS Facility API running' });
+});
+
+// ============ FALLBACK FOR SPA ROUTING ============
+// Ini penting untuk Single Page Application agar route frontend bekerja
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+  console.log(`Frontend available at: http://localhost:${PORT}`);
+  console.log(`API available at: http://localhost:${PORT}/api/facilities`);
+});
