@@ -91,7 +91,6 @@ Klik peta → otomatis mengisi koordinat form.
 
 ## 🏗️ Arsitektur Sistem
 
-```
 ┌───────────────────────────────┐
 │           Frontend            │
 │  HTML + CSS + JS + Leaflet    │
@@ -105,7 +104,6 @@ Klik peta → otomatis mengisi koordinat form.
 ┌───────────────▼───────────────┐
 │           SQLite DB           │
 └───────────────────────────────┘
-```
 
 ---
 
@@ -154,17 +152,13 @@ npm run dev
 
 Backend berjalan di:
 
-```
-http://localhost:3000
-```
+<http://localhost:3000>
 
 ### 3️⃣ Menjalankan Frontend
 
 Buka langsung:
 
-```
 frontend/index.html
-```
 
 Atau lewat Express (disarankan, menghindari CORS):
 
@@ -176,15 +170,10 @@ app.use(express.static('../frontend'));
 
 Lalu buka:
 
-```
-http://localhost:3000/index.html
-```
-
----
+<http://localhost:3000/index.html>
 
 ## 📁 Struktur Folder
 
-```
 gis-fasilitas-publik/
 │
 ├── backend/
@@ -197,30 +186,21 @@ gis-fasilitas-publik/
     ├── index.html
     ├── main.js
     └── style.css
-```
-
----
 
 ## 🔌 API Endpoint (Backend)
 
 ### 1. GET semua fasilitas
 
-```
 GET /api/facilities
-```
 
 Query opsional:
 
-```
 ?category=Masjid
 ?q=sehat
-```
 
 ### 2. GET fasilitas by ID
 
-```
 GET /api/facilities/:id
-```
 
 ### 3. POST tambah fasilitas
 
@@ -238,15 +218,11 @@ GET /api/facilities/:id
 
 ### 4. PUT update fasilitas
 
-```
 PUT /api/facilities/:id
-```
 
 ### 5. DELETE fasilitas
 
-```
 DELETE /api/facilities/:id
-```
 
 ---
 
@@ -336,13 +312,3 @@ Jika 5 anggota → tambahkan role **DevOps/Deployment**.
 
 Proyek ini dibuat untuk keperluan edukasi.
 Silakan digunakan, dimodifikasi, dan dikembangkan lebih lanjut sesuai kebutuhan.
-
----
-
-Kalau kamu mau, aku bisa:
-✅ Membuat versi README yang lebih ringkas
-✅ Membuat versi bahasa Inggris
-✅ Membuat badge GitHub
-✅ Menambahkan screenshot mockup bagian "Preview Aplikasi"
-
-Mau lanjut?
