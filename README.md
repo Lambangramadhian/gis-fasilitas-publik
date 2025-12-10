@@ -267,35 +267,23 @@ INSERT INTO facilities (name, category, address, latitude, longitude) VALUES
 
 ## 👥 Pembagian Tugas Kelompok
 
-*(Silakan ganti sesuai anggota tim)*
-
-### 1. Ketua / Dokumentasi
+### 1. Dokumentasi (Indah Agustin)
 
 * Menyusun laporan & README
 * Koordinasi tim
 * Dokumentasi perancangan
 
-### 2. Frontend Developer
+### 2. Frontend Developer (Fatih Mubasyir)
 
 * Implementasi Leaflet
 * Marker, popup
 * Form input → API
 
-### 3. Backend Developer
+### 3. Backend Developer (Lambang Ramadhian)
 
 * Express.js
 * CRUD API
 * SQLite
-
-### 4. Tester & Data Engineer
-
-* Testing UI & API
-* Validasi koordinat
-* Mengisi data awal
-
-Jika 5 anggota → tambahkan role **DevOps/Deployment**.
-
----
 
 ## 🔮 Rencana Pengembangan
 
