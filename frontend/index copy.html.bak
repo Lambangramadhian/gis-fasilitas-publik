@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <title>Peta Fasilitas Publik</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="map"></div>
+  <div id="sidebar">
+    <div class="controls">
+      <select id="filterCategory" aria-label="Filter kategori fasilitas">
+        <option value="">-- Semua Kategori --</option>
+        <option>Masjid</option>
+        <option>Klinik</option>
+        <option>SPBU</option>
+        <option>ATM</option>
+        <option>Sekolah</option>
+      </select>
+      <input type="text" id="q" placeholder="Cari nama atau alamat..." />
+      <button id="searchBtn">Cari</button>
+      <button id="refreshBtn">Refresh Semua</button>
+    </div>
+    <div>
+      <strong>Hasil:</strong>
+      <div id="results"></div>
+    </div>
+    <hr/>
+    <div>
+      <strong>Tambah Lokasi Baru</strong>
+      <form id="addForm">
+        <input required placeholder="Nama" id="name"/><br/>
+        <select id="category" aria-label="Pilih kategori fasilitas">
+          <option>Masjid</option><option>Klinik</option><option>SPBU</option><option>ATM</option><option>Sekolah</option>
+        </select><br/>
+        <input placeholder="Alamat" id="addr"/><br/>
+        <input required placeholder="Latitude" id="lat"/><input required placeholder="Longitude" id="lng"/><br/>
+        <input placeholder="Telepon" id="phone"/><br/>
+        <textarea placeholder="Deskripsi" id="desc"></textarea><br/>
+        <button type="submit">Tambahkan</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

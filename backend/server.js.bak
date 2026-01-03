@@ -20,8 +20,6 @@ const db = new sqlite3.Database(DBSOURCE, (err) => {
     throw err;
   } else {
     console.log('Connected to SQLite database.');
-    
-    // 1. Bikin Tabel (Kalau belum ada)
     db.run(`CREATE TABLE IF NOT EXISTS facilities (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
@@ -32,33 +30,7 @@ const db = new sqlite3.Database(DBSOURCE, (err) => {
       phone TEXT,
       description TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    )`, (err) => {
-        if (err) {
-            console.error("Gagal buat tabel:", err);
-        } else {
-            // 2. CEK: Apakah tabel masih kosong?
-            db.get("SELECT count(*) as count FROM facilities", (err, row) => {
-                if (row.count === 0) {
-                    console.log("⚠️ Database kosong! Mengisi data awal (Seeding)...");
-                    
-                    // 3. INI ISI DARI INIT.SQL LU
-                    const insert = `INSERT INTO facilities (name, category, address, latitude, longitude, description) VALUES 
-                                    ('Masjid Agung', 'Masjid', 'Jl. Merdeka 1', -6.2000, 106.8166, 'Masjid Raya Pusat Kota'),
-                                    ('Klinik Sehat', 'Klinik', 'Jl. Sehat 10', -6.2015, 106.8180, 'Buka 24 Jam'),
-                                    ('SPBU Prima', 'SPBU', 'Jl. Bensin 3', -6.2020, 106.8200, 'Tersedia Pertamax Turbo'),
-                                    ('ATM Mandiri', 'ATM', 'Jl. Sudirman', -6.2010, 106.8190, 'ATM Center'),
-                                    ('SMAN 1 Jakarta', 'Sekolah', 'Jl. Budi Utomo', -6.1950, 106.8300, 'Sekolah Menengah Atas')`;
-                    
-                    db.run(insert, (err) => {
-                        if (err) console.log("Gagal insert data awal:", err);
-                        else console.log("✅ Data awal berhasil dimasukkan!");
-                    });
-                } else {
-                    console.log("✅ Database sudah berisi data.");
-                }
-            });
-        }
-    });
+    )`);
   }
 });
 

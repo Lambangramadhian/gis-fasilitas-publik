@@ -1,5 +1,196 @@
-body { margin:0; font-family: Arial, sans-serif; }
-#map { height: 80vh; }
-#sidebar { padding: 10px; height: 20vh; overflow:auto; background:#f8f8f8; }
-.controls { margin-bottom:8px; }
-.result-item { padding:6px; border-bottom:1px solid #ddd; cursor:pointer;}
+/* 1. RESET SAKTI: Pastikan HTML & BODY 100% layar */
+html, body { 
+    height: 100%; 
+    width: 100%;
+    margin: 0; 
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden; /* Anti scrollbar ganda */
+}
+
+/* 2. CONTAINER UTAMA: Layout Kiri-Kanan */
+body { 
+    display: flex; 
+    flex-direction: row; /* Pastikan berbaris ke samping */
+}
+
+/* 3. SIDEBAR (Kiri) */
+#sidebar { 
+    width: 450px;       /* Lebar fix */
+    height: 100%;       /* Tinggi full */
+    background: #ffffff; 
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1); 
+    z-index: 1000;      /* Di atas peta */
+    flex-shrink: 0;     /* PENTING: Biar sidebar gak gepeng kegencet map */
+}
+
+/* Header Sidebar */
+.sidebar-header {
+    padding: 20px;
+    background: #2c3e50;
+    color: white;
+}
+.sidebar-header h2 { margin: 0; font-size: 1.2rem; }
+
+/* Content Scrollable */
+.sidebar-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 35px;
+}
+
+/* 4. MAP (Kanan) - Wajib punya width & height */
+#map { 
+    flex-grow: 1;       /* Ambil sisa ruang kosong */
+    height: 100%;       /* Tinggi full */
+    width: 100%;        /* Lebar full dari sisa ruang */
+    background: #e5e5e5; /* Warna abu buat ngecek loading */
+}
+
+/* --- Styling Komponen (Sama kayak request lu) --- */
+
+/* Input & Controls */
+.controls { display: flex; gap: 5px; margin-bottom: 15px; flex-wrap: wrap;}
+input, select, textarea {
+    width: 100%;
+    padding: 14px;      
+    margin-bottom: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px; 
+    font-size: 16px;    
+    background-color: #fff;
+}
+select {
+    cursor: pointer;
+    height: 50px; /* Paksa tinggi biar gagah */
+}
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 3px rgba(52, 152, 219, 0.3);
+}
+
+/* Buttons */
+button {
+    padding: 15px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+#searchBtn { background: #3498db; color: white; flex: 1; }
+#refreshBtn { background: #95a5a6; color: white; }
+button[type="submit"] { background: #27ae60; color: white; width: 100%; }
+button:hover { opacity: 0.9; transform: translateY(-1px); }
+button:active { transform: translateY(0); }
+
+/* Result Items (Cards) */
+.result-item { 
+    padding: 12px; 
+    border: 1px solid #eee; 
+    border-radius: 8px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background: white;
+    transition: all 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.result-item:hover {
+    background: #f0f8ff;
+    border-color: #3498db;
+    transform: translateX(3px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.result-item b { color: #2c3e50; font-size: 15px; display: block; margin-bottom: 4px;}
+.result-item small { color: #7f8c8d; }
+
+/* Accordion Form */
+details {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 20px;
+}
+details summary {
+    cursor: pointer;
+    font-weight: bold;
+    color: #2980b9;
+    outline: none;
+    list-style: none; /* Ilangin segitiga default browser lama */
+}
+/* Custom marker buat summary */
+details summary::-webkit-details-marker { display: none; }
+details summary::after { content: " 👇"; font-size: 0.8em;}
+details[open] summary::after { content: " 👆"; }
+
+/* Tombol Hapus Kecil di Sidebar (Tong Sampah) */
+.btn-delete-small {
+    float: right;
+    background: #e74c3c; /* Warna Merah */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 8px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-left: 5px;
+    z-index: 10; /* Biar bisa diklik */
+}
+.btn-delete-small:hover {
+    background: #c0392b;
+}
+
+/* Tombol Hapus Lebar di dalam Popup Map */
+.btn-delete-popup {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%; /* Full width di popup */
+    margin-top: 8px;
+    font-size: 12px;
+}
+.btn-delete-popup:hover {
+    background: #c0392b;
+}
+
+/* Tombol Edit Kecil (Sidebar) */
+.btn-edit-small {
+    float: right;
+    background: #be7d14; /* Warna Oren */
+    color: white;
+    border: none;
+   border-radius: 4px;
+    padding: 5px 8px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-left: 5px;
+    z-index: 10;
+}
+.btn-edit-small:hover { background: #d35400; }
+
+/* Tombol Edit di Popup */
+.btn-edit-popup {
+    background: #be7d14;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%; /* Full width di popup */
+    margin-top: 8px;
+    font-size: 12px;
+}
+.btn-edit-popup:hover { background: #d35400; }
+
+/* Status Mode Edit di Form */
+.edit-mode input, .edit-mode select, .edit-mode textarea {
+    border-color: #86580f;
+    background-color: #fffaf0;
+}
