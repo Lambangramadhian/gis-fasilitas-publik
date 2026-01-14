@@ -1,302 +1,243 @@
 # 🗺️ GIS Pencarian Fasilitas Publik
 
-Aplikasi Sistem Informasi Geografis (SIG) berbasis web untuk mencari dan menampilkan berbagai jenis fasilitas publik seperti **Masjid, Klinik, SPBU, ATM, dan Sekolah**. Aplikasi ini menyediakan fitur pencarian, filter kategori, CRUD data fasilitas, serta tampilan peta interaktif menggunakan **Leaflet (OpenStreetMap)**.
+**Pengembangan Aplikasi Sistem Informasi Geografis Berbasis Web**
 
-Project ini dibuat sebagai pemenuhan **Tugas 5 – Pengembangan Aplikasi GIS**
-Program Studi Sistem Informasi – STT Terpadu Nurul Fikri.
+Proyek ini merupakan aplikasi **Web-based GIS** yang dikembangkan untuk memenuhi **Tugas 5 Mata Kuliah Sistem Informasi Geografis**, Program Studi Sistem Informasi, STT Terpadu Nurul Fikri.
 
----
-
-## 📌 Daftar Isi
-
-* [Deskripsi Proyek](#deskripsi-proyek)
-* [Fitur Utama](#fitur-utama)
-* [Arsitektur Sistem](#arsitektur-sistem)
-* [Teknologi yang Digunakan](#teknologi-yang-digunakan)
-* [Instalasi & Menjalankan](#instalasi--menjalankan)
-* [Struktur Folder](#struktur-folder)
-* [API Endpoint (Backend)](#api-endpoint-backend)
-* [Skema Database](#skema-database)
-* [Cara Menggunakan Aplikasi](#cara-menggunakan-aplikasi)
-* [Pembagian Tugas Kelompok](#pembagian-tugas-kelompok)
-* [Rencana Pengembangan](#rencana-pengembangan)
-* [Lisensi](#lisensi)
+Aplikasi memanfaatkan **Maps API (Leaflet)** untuk menampilkan peta interaktif serta menyediakan fitur pencarian dan pengelolaan data fasilitas publik.
 
 ---
 
-## 📌 Deskripsi Proyek
+## 📌 Deskripsi Aplikasi
 
-Aplikasi ini dikembangkan untuk membantu pengguna menemukan fasilitas publik dengan cepat dan akurat. Data fasilitas ditampilkan dalam bentuk marker pada peta dan dapat dicari berdasarkan kata kunci atau kategori. Pengguna juga bisa menambahkan fasilitas baru melalui form yang terhubung ke REST API.
+Aplikasi GIS Pencarian Fasilitas Publik bertujuan untuk membantu pengguna menemukan lokasi fasilitas publik secara cepat dan visual melalui peta digital. Fasilitas yang ditampilkan meliputi masjid, klinik, SPBU, ATM, dan sekolah.
 
-Aplikasi memanfaatkan:
-
-* **Leaflet + OpenStreetMap** (Maps API)
-* **Express.js REST API**
-* **SQLite Database**
+Permasalahan yang diselesaikan oleh aplikasi ini adalah keterbatasan informasi lokasi fasilitas publik yang mudah diakses dan terintegrasi dalam satu sistem berbasis peta.
 
 ---
 
-## ⭐ Fitur Utama
+## 🎯 Tujuan Pengembangan
 
-### 🗺️ 1. Peta Interaktif
+* Menerapkan penggunaan **Maps API** sesuai materi perkuliahan
+* Mengembangkan aplikasi **Web GIS** berbasis client-server
+* Menyediakan fitur pencarian dan visualisasi data spasial
+* Menerapkan konsep input dan output pada aplikasi SIG
+* Mengintegrasikan data spasial dengan basis data
 
-* Menggunakan Leaflet + OpenStreetMap
-* Zoom, drag, dan klik peta untuk mengambil koordinat
+---
 
-### 🔍 2. Pencarian Fasilitas
+## ⭐ Fitur Aplikasi
 
-* Berdasarkan nama, alamat, atau kategori
+### 1. Menampilkan Peta Digital
 
-### 🧭 3. Filter Kategori
+* Menggunakan **Leaflet Maps API**
+* Tile layer dari **OpenStreetMap**
+* Peta dapat di-zoom dan di-drag
 
-Kategori default:
+### 2. Penambahan Marker Lokasi
 
-* Masjid
-* Klinik
-* SPBU
-* ATM
-* Sekolah
+* Marker menunjukkan lokasi fasilitas publik
+* Setiap marker memiliki popup informasi
 
-### 📌 4. Marker & Popup Detail
+### 3. Pencarian dan Filter Data
 
-Setiap marker menampilkan:
+* Pencarian berdasarkan nama atau alamat
+* Filter berdasarkan kategori fasilitas
 
-* Nama
-* Kategori
-* Alamat
-* Informasi tambahan
+### 4. Event Handling pada Peta
 
-### ➕ 5. Tambah Lokasi Baru
+* Klik peta untuk mendapatkan koordinat lokasi
+* Koordinat otomatis terisi ke form input
 
-Form input mencakup:
+### 5. Input Data Fasilitas Publik
 
-* Nama
-* Kategori
-* Alamat
-* Latitude / Longitude
-* Telepon
-* Deskripsi
+* Form input lokasi baru
+* Data disimpan ke basis data SQLite
 
-Klik peta → otomatis mengisi koordinat form.
+### 6. Backend CRUD API
 
-### 🗃️ 6. REST API CRUD
-
-* GET semua fasilitas
-* GET fasilitas berdasarkan ID
-* POST menambah fasilitas
-* PUT update fasilitas
-* DELETE menghapus fasilitas
+* Create, Read, Update, Delete data fasilitas
+* REST API berbasis Express.js
 
 ---
 
 ## 🏗️ Arsitektur Sistem
 
-┌───────────────────────────────┐
-│           Frontend            │
-│  HTML + CSS + JS + Leaflet    │
-└───────────────┬───────────────┘
-                │ REST API
-┌───────────────▼───────────────┐
-│            Backend            │
-│        Node.js + Express      │
-└───────────────┬───────────────┘
-                │ SQLite Driver
-┌───────────────▼───────────────┐
-│           SQLite DB           │
-└───────────────────────────────┘
+Aplikasi ini menerapkan konsep **Distributed GIS (Web-based GIS)**.
+
+```
+Client (Web Browser)
+        ↓
+Frontend (HTML, CSS, JavaScript, Leaflet)
+        ↓ REST API
+Backend (Node.js + Express)
+        ↓
+Database (SQLite)
+```
+
+Komponen sistem sesuai konsep SIG terdistribusi:
+
+* Client
+* Web/Application Server
+* Data Server
 
 ---
 
 ## ⚙️ Teknologi yang Digunakan
 
+### Maps API
+
+* **Leaflet.js**
+* OpenStreetMap Tile Server
+
 ### Frontend
 
-* Leaflet.js
-* OpenStreetMap Tile Layer
-* HTML, CSS, JavaScript
+* HTML
+* CSS
+* JavaScript
 
 ### Backend
 
 * Node.js
 * Express.js
-* CORS
-* Body-parser
 
 ### Database
 
-* SQLite3
-
-### Tools Pendukung
-
-* Postman (testing API)
-* Git / GitHub
+* SQLite
 
 ---
 
-## 🚀 Instalasi & Menjalankan
-
-### 1️⃣ Clone Repository
-
-```bash
-git clone https://github.com/Lambangramadhian/gis-fasilitas-publik.git
-cd gis-fasilitas-publik
-```
-
-### 2️⃣ Instal & Menjalankan Backend
-
-```bash
-cd backend
-npm install
-npm run dev
-```
-
-Backend berjalan di:
-
-<http://localhost:3000>
-
-### 3️⃣ Menjalankan Frontend
-
-Buka langsung:
-
-frontend/index.html
-
-Atau lewat Express (disarankan, menghindari CORS):
-
-Di `server.js` tambahkan:
-
-```javascript
-app.use(express.static('../frontend'));
-```
-
-Lalu buka:
-
-<http://localhost:3000/index.html>
-
 ## 📁 Struktur Folder
 
+```
 gis-fasilitas-publik/
 │
 ├── backend/
 │   ├── server.js
-│   ├── facilities.db
 │   ├── package.json
-│   └── init.sql
+│   ├── facilities.db
 │
 └── frontend/
-    ├── index.html
-    ├── main.js
-    └── style.css
-
-## 🔌 API Endpoint (Backend)
-
-### 1. GET semua fasilitas
-
-GET /api/facilities
-
-Query opsional:
-
-?category=Masjid
-?q=sehat
-
-### 2. GET fasilitas by ID
-
-GET /api/facilities/:id
-
-### 3. POST tambah fasilitas
-
-```json
-{
-  "name": "Masjid Agung",
-  "category": "Masjid",
-  "address": "Jl Merdeka",
-  "latitude": -6.2000,
-  "longitude": 106.8166,
-  "phone": "021-XXXX",
-  "description": "Masjid besar pusat kota"
-}
+    └── index.html
 ```
-
-### 4. PUT update fasilitas
-
-PUT /api/facilities/:id
-
-### 5. DELETE fasilitas
-
-DELETE /api/facilities/:id
 
 ---
 
-## 🗂️ Skema Database
+## 🔌 Endpoint API
 
-### Tabel `facilities`
+### GET Semua Fasilitas
+
+```
+GET /api/facilities
+```
+
+### GET Berdasarkan ID
+
+```
+GET /api/facilities/{id}
+```
+
+### Tambah Data Fasilitas
+
+```
+POST /api/facilities
+```
+
+### Update Data
+
+```
+PUT /api/facilities/{id}
+```
+
+### Hapus Data
+
+```
+DELETE /api/facilities/{id}
+```
+
+---
+
+## 🗂️ Skema Basis Data
+
+**Tabel facilities**
 
 ```sql
 CREATE TABLE facilities (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name TEXT NOT NULL,
-  category TEXT NOT NULL,
+  name TEXT,
+  category TEXT,
   address TEXT,
-  latitude REAL NOT NULL,
-  longitude REAL NOT NULL,
+  latitude REAL,
+  longitude REAL,
   phone TEXT,
-  description TEXT,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  description TEXT
 );
-```
-
-### Sample Data
-
-```sql
-INSERT INTO facilities (name, category, address, latitude, longitude) VALUES
-('Masjid Agung', 'Masjid', 'Jl. Merdeka 1', -6.2000, 106.8166),
-('Klinik Sehat', 'Klinik', 'Jl. Sehat 10', -6.2015, 106.8180),
-('SPBU Prima', 'SPBU', 'Jl. Bensin 3', -6.2020, 106.8200);
 ```
 
 ---
 
 ## 📝 Cara Menggunakan Aplikasi
 
-1. Buka aplikasi → peta utama tampil.
-2. Masukkan kata kunci → klik cari.
-3. Gunakan filter kategori.
-4. Klik marker untuk melihat detail fasilitas.
-5. Tambahkan data baru via form dan klik peta untuk mengisi koordinat otomatis.
+1. Jalankan backend server
+2. Buka aplikasi melalui browser
+3. Peta akan ditampilkan secara otomatis
+4. Gunakan fitur pencarian atau filter kategori
+5. Klik marker untuk melihat detail fasilitas
+6. Klik peta untuk menambahkan lokasi baru
 
 ---
 
 ## 👥 Pembagian Tugas Kelompok
 
-### 1. Dokumentasi (Indah Agustin)
+Contoh pembagian tugas anggota:
 
-* Menyusun laporan & README
-* Koordinasi tim
-* Dokumentasi perancangan
+* **Indah Agustin**
 
-### 2. Frontend Developer (Fatih Mubasyir)
+  * Koordinasi dan dokumentasi
+  * Penyusunan laporan
 
-* Implementasi Leaflet
-* Marker, popup
-* Form input → API
+* **Fatih Mubasyir**
 
-### 3. Backend Developer (Lambang Ramadhian)
+  * Implementasi Leaflet Maps API
+  * Tampilan peta dan marker
+  * Pembuatan REST API
+  * Integrasi database
 
-* Express.js
-* CRUD API
-* SQLite
+* **Lambang Ramadhian**
 
-## 🔮 Rencana Pengembangan
+  * Pengujian aplikasi
+  * Input dan validasi data spasial
 
-* Routing / navigasi ke fasilitas terdekat
-* Integrasi geocoding (alamat → koordinat)
-* Upload foto fasilitas
-* Login & manajemen admin
-* Migrasi database ke PostgreSQL/PostGIS
-* Peningkatan responsivitas mobile
+---
+
+## 🎥 Video Presentasi
+
+* Durasi maksimal: 10 menit
+* Setiap anggota tampil dan menyebutkan nama serta NIM
+* Menjelaskan:
+
+  * Tools dan teknologi
+  * Cara kerja aplikasi
+  * Demo fitur
+
+---
+
+## 📅 Deadline
+
+* **Laporan Tugas**: 18 Januari 2026
+* **Unggah Video Presentasi**: 18 Januari 2026
+
+---
+
+## 🔮 Pengembangan Selanjutnya
+
+* Perhitungan jarak fasilitas terdekat
+* Integrasi geocoding alamat
+* Autentikasi pengguna
+* Migrasi database ke PostGIS
 
 ---
 
 ## 📜 Lisensi
 
-Proyek ini dibuat untuk keperluan edukasi.
-Silakan digunakan, dimodifikasi, dan dikembangkan lebih lanjut sesuai kebutuhan.
+Proyek ini dibuat untuk kepentingan akademik dan pembelajaran.
